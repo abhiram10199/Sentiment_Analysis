@@ -1,3 +1,14 @@
+'''
+vocab.py is a script that creates a vocabulary from the movie review dataset. 
+It uses the cleaner.py script to clean the text and remove punctuation. 
+The vocabulary is saved to a file called vocab.txt. 
+The vocabulary is created by processing all the documents in the dataset 
+and counting the frequency of each word. The words that appear at least 
+twice are added to the vocabulary. The vocabulary is then loaded from the 
+file and converted to a set for fast membership testing.
+'''
+
+
 from cleaner import *
 from string import punctuation
 from os import listdir

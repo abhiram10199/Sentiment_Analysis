@@ -1,3 +1,7 @@
+'''
+cleaner.py is a script that defines functions for loading and cleaning text data.
+'''
+
 import string
 try:
     from nltk.corpus import stopwords
@@ -7,21 +11,28 @@ except ImportError:
     from nltk.corpus import stopwords
 
 
-# Reading the reviews/file
+# Reads all the text in a file and returns it
 def load_doc(filename) -> str:
     with open(filename, 'r') as file:
         text = file.read()
     return text
 
 
-# Cleaning the reviews
+# Splits the text into words and removes punctuation and stopwords
 def clean_doc(doc) -> list[str]:
     tokens = doc.split()
+    
+    # Remove punctuation
     table = str.maketrans('', '', string.punctuation)
     tokens: list[str] = [w.translate(table) for w in tokens]
-    tokens: list[str] = [word for word in tokens if word.isalpha()]
+    
+    # Remove stopwords
     stop_words = set(stopwords.words('english'))
-    tokens: list[str] = [w for w in tokens if not w in stop_words]
+    tokens: list[str] = [word for word in tokens 
+                         if word.isalpha() 
+                         and word not in stop_words 
+                         and len(word) > 1]
+    
     return [word for word in tokens if len(word) > 1]
 
 
