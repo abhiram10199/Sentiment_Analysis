@@ -2,6 +2,7 @@
 cleaner.py is a script that defines functions for loading and cleaning text data.
 '''
 
+
 import string
 try:
     from nltk.corpus import stopwords
@@ -21,7 +22,7 @@ def load_doc(filename) -> str:
 # Splits the text into words and removes punctuation and stopwords
 def clean_doc(doc) -> list[str]:
     tokens = doc.split()
-    
+
     # Remove punctuation
     table = str.maketrans('', '', string.punctuation)
     tokens: list[str] = [w.translate(table) for w in tokens]
@@ -36,7 +37,7 @@ def clean_doc(doc) -> list[str]:
     return [word for word in tokens if len(word) > 1]
 
 
-# Converting the reviews to lines
+# Converts a document to a line of tokens/words
 def doc_to_line(filename, vocab) -> str:
     doc = load_doc(filename)
     tokens = clean_doc(doc)

@@ -26,9 +26,9 @@ def process_docs(directory, vocab) -> list[str]:
     lines = []
     for filename in listdir(directory):
         if not filename.endswith('.txt') or filename.startswith('cv9'):
-            continue
+            continue    # skip .txt and setaside .cv9 for testing
         path = directory + '/' + filename
-        #add_doc_to_vocab(path, vocab)
+        '''add_doc_to_vocab(path, vocab)     !!!Remove for new vocab creation!!!'''
         line = doc_to_line(path, vocab)
         lines.append(line)
     return lines
@@ -47,11 +47,10 @@ def new_vocab() -> list[str]:
     process_docs('txt_sentoken/pos', vocab)
     process_docs('txt_sentoken/neg', vocab)
     # k = word, c = frequency
-    tokens = [k for k, c in vocab.items() if c >= 2]
-    return tokens
+    return [k for k, c in vocab.items() if c >= 2] 
 
 
-# Loads the vocabulary from a file and makes a set
+# Loads the vocabulary from the vocab file and makes a set
 def vocab_set() -> None:
     vocab_filename = 'vocab.txt'
     vocab = load_doc(vocab_filename)
