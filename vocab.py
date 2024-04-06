@@ -4,8 +4,8 @@ It uses the cleaner.py script to clean the text and remove punctuation.
 The vocabulary is saved to a file called vocab.txt. 
 The vocabulary is created by processing all the documents in the dataset 
 and counting the frequency of each word. The words that appear at least 
-twice are added to the vocabulary. The vocabulary is then loaded from the 
-file and converted to a set for fast membership testing.
+twice are added to the vocabulary. The vocabulary is then loaded from 
+the file and converted to a set.
 '''
 
 
@@ -13,7 +13,7 @@ from cleaner import *
 from string import punctuation
 from os import listdir
 from collections import Counter
-from tensorflow.keras.preprocessing.text import Tokenizer
+
 
 # Adds the words from a document to the vocabulary
 def add_doc_to_vocab(filename, vocab) -> None:
@@ -60,28 +60,16 @@ def vocab_set() -> None:
     return vocab
 
 
-# Converts a document to a line of tokens
-def list_of_docs(vocab) -> list[str]:
-    # is_train = False when it is TESTING data!!
-    # is_train = True when it is TRAINING data!!
-    positive_lines = process_docs('txt_sentoken/pos', vocab, True)
-    negative_lines = process_docs('txt_sentoken/neg', vocab, True)
-    docs = positive_lines + negative_lines
-    return docs
-
-
-# Get the vocab & docs to other files
-def get_docs_vocab() -> tuple:
+# Get the vocab to other files
+def getter() -> tuple:
     vocab = vocab_set()
-    docs = list_of_docs(vocab)
-    return vocab, docs
+    #docs = list_of_docs(vocab)
+    return vocab
 
 
 def main():
-    '''# Create a new vocabulary
+    # Create a new vocabulary
     vocab = vocab_set()
-    list_of_docs(vocab)'''
-    ...
     
 
 if __name__ == '__main__':
