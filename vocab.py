@@ -13,6 +13,7 @@ from cleaner import *
 from string import punctuation
 from os import listdir
 from collections import Counter
+from tensorflow.keras.preprocessing.text import Tokenizer
 
 # Adds the words from a document to the vocabulary
 def add_doc_to_vocab(filename, vocab) -> None:
@@ -22,11 +23,13 @@ def add_doc_to_vocab(filename, vocab) -> None:
 
 
 # Processes the documents in a directory
-def process_docs(directory, vocab) -> list[str]:
+def process_docs(directory, vocab, is_train) -> list[str]:
     lines = []
     for filename in listdir(directory):
-        if not filename.endswith('.txt') or filename.startswith('cv9'):
-            continue    # skip .txt and setaside .cv9 for testing
+        if is_train and filename.startswith('cv9'):
+            continue
+        if not is_train and not filename.startswith('cv9'):
+            continue
         path = directory + '/' + filename
         '''add_doc_to_vocab(path, vocab)     !!!Remove for new vocab creation!!!'''
         line = doc_to_line(path, vocab)
@@ -52,18 +55,34 @@ def new_vocab() -> list[str]:
 
 # Loads the vocabulary from the vocab file and makes a set
 def vocab_set() -> None:
-    vocab_filename = 'vocab.txt'
-    vocab = load_doc(vocab_filename)
-    vocab = vocab.split()
-    vocab = set(vocab)
+    vocab = load_doc('vocab.txt')
+    vocab = set(vocab.split())
     return vocab
 
 
-def main():
+# Converts a document to a line of tokens
+def list_of_docs(vocab) -> list[str]:
+    # is_train = False when it is TESTING data!!
+    # is_train = True when it is TRAINING data!!
+    positive_lines = process_docs('txt_sentoken/pos', vocab, True)
+    negative_lines = process_docs('txt_sentoken/neg', vocab, True)
+    docs = positive_lines + negative_lines
+    return docs
+
+
+# Get the vocab & docs to other files
+def get_docs_vocab() -> tuple:
     vocab = vocab_set()
-    positive_lines = process_docs('txt_sentoken/pos', vocab)
-    negative_lines = process_docs('txt_sentoken/neg', vocab)
-    print(len(positive_lines), len(negative_lines))
+    docs = list_of_docs(vocab)
+    return vocab, docs
+
+
+def main():
+    '''# Create a new vocabulary
+    vocab = vocab_set()
+    list_of_docs(vocab)'''
+    ...
+    
 
 if __name__ == '__main__':
     main()
