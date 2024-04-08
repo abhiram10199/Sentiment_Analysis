@@ -28,32 +28,32 @@ def test_list_of_docs(vocab) -> list[str]:
 
 # Encodes the training data using the tokeniser & their frequencies
 def training_data_matrix(tokeniser, vocab) -> list:
-    docs = train_list_of_docs(vocab)
-    fit_tokeniser(tokeniser, docs)
-    training_matrix = tokeniser.texts_to_matrix(docs, mode='freq')
-    print("Training Matrix =", training_matrix.shape)
+    train_docs = train_list_of_docs(vocab)
+    fit_tokeniser(tokeniser, train_docs)
+    training_matrix = tokeniser.texts_to_matrix(train_docs, mode='freq')
+    #print("Training Matrix =", training_matrix.shape)
     ytrain = array([0 for _ in range(900)] + [1 for _ in range(900)])
-    return training_matrix, ytrain
+    return training_matrix, ytrain, train_docs
 
 
 # Encodes the testing data using the tokeniser & their frequencies
 def testing_data_matrix(tokeniser, vocab) -> None:   
-    docs = test_list_of_docs(vocab)
-    fit_tokeniser(tokeniser, docs)
-    testing_matrix = tokeniser.texts_to_matrix(docs, mode='freq')
-    print("Testing Matrix =", testing_matrix.shape)
+    test_docs = test_list_of_docs(vocab)
+    fit_tokeniser(tokeniser, test_docs)
+    testing_matrix = tokeniser.texts_to_matrix(test_docs, mode='freq')
+    #print("Testing Matrix =", testing_matrix.shape)
     ytest = array([0 for _ in range(100)] + [1 for _ in range(100)])
-    return testing_matrix, ytest
+    return testing_matrix, ytest, test_docs
 
 
 # return the matrices so i can get it in model.py
 def getter2(vocab) -> tuple:
     tokeniser = Tokenizer()
     
-    training_matrix, ytrain = training_data_matrix(tokeniser, vocab)
-    testing_matrix, ytest = testing_data_matrix(tokeniser, vocab)
+    training_matrix, ytrain, train_docs = training_data_matrix(tokeniser, vocab)
+    testing_matrix, ytest, test_docs = testing_data_matrix(tokeniser, vocab)
 
-    return training_matrix, ytrain, testing_matrix, ytest
+    return training_matrix, ytrain, train_docs, testing_matrix, ytest, test_docs
 
 
 def main():
