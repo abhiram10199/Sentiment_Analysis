@@ -1,6 +1,6 @@
 from vocab import *
 from numpy import array
-from tensorflow.keras.preprocessing.text import Tokenizer  #type: ignore
+from tensorflow.keras.preprocessing.text import Tokenizer
 
 
 # Converts a document to a line of tokens and fits the tokeniser on the text
@@ -64,8 +64,8 @@ def main():
     fit_tokeniser(tokeniser, vocab)
 
     # Get the matrices
-    training_matrix, ytrain = training_data_matrix(tokeniser, vocab)
-    testing_matrix, ytest = testing_data_matrix(tokeniser, vocab)
+    training_matrix, ytrain, testDocs1 = training_data_matrix(tokeniser, vocab)
+    testing_matrix, ytest, testDocs2 = testing_data_matrix(tokeniser, vocab)
 
 
 if __name__ == '__main__':

@@ -5,6 +5,9 @@ from keras.layers import Dropout
 from pandas import DataFrame
 from matplotlib import pyplot
 
+
+print("Running model.py")
+
 # Getting the data
 vocab = getter()    
 training_matrix, ytrain, train_docs, testing_matrix, ytest, test_docs = getter2(vocab)
@@ -53,9 +56,23 @@ def model(train_docs, test_docs) -> None:
 “freq” Where words are scored based on their frequency of occurrence within the document.
 '''
 
-def main(test_docs, train_docs):
-    model(train_docs, test_docs)
+# Predict the sentiment of a review
+def predict_sentiment(review, vocab, tokenizer, model) -> str:
+    tokens = clean_doc(review)
+    tokens = [w for w in tokens if w in vocab]
+    line = ' '.join(tokens)
+    encode = tokenizer.texts_to_matrix([line], mode='binary')
+    yhat = model.predict(encode, verbose=0)
+    return round(yhat[0,0])
+
+
+# MAIN FUNCTION
+def main(train_docs, test_docs) -> None:
+    test_review = "love this movie"
+    tokenizer = Tokenizer()
+    print(predict_sentiment(test_review, vocab, tokenizer, model))
+
 
 
 if __name__ == '__main__':
-    main(test_docs, train_docs)
+    main(train_docs, test_docs)
