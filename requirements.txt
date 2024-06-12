@@ -1,7 +1,4 @@
-string
-nltk.corpus
-os
-collections
+nltk
 numpy
 tensorflow
 keras
