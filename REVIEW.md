@@ -147,6 +147,7 @@ min     0.900000   0.875000   0.845000   0.900000
 75%     0.923750   0.893750   0.863750   0.910000
 max     0.935000   0.895000   0.875000   0.910000
 ```
+!(Figure 1)[https://github.com/abhiram10199/Sentiment_Analysis/blob/main/Figure_1.png]
 
 
 ### Experimentation & Results
