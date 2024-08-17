@@ -1,0 +1,19 @@
+'love movie'
+'terrible movie'
+
+
+binary
+1: 1
+2: 1
+
+freq
+1: 0
+2: 1
+
+tfidf
+1: 1
+2: 1
+
+count
+1: 1
+2: 1

@@ -27,7 +27,7 @@ def prepare_data(train_docs, test_docs, mode) -> tuple:
 def evaluate_model(training_matrix, ytrain, testing_matrix, ytest) -> list:
     scores = []
     no_of_words = training_matrix.shape[1]
-    n = 5                   # Number of times to run the model
+    n = 10                   # Number of times to run the model
     for i in range(n):
         model = Sequential()
         model.add(Dense(50, input_shape=(no_of_words,), activation='relu'))
@@ -62,20 +62,20 @@ def predict_sentiment(review, vocab, tokeniser, model) -> str:
     tokens = clean_doc(review)
     tokens = [w for w in tokens if w in vocab]
     line = ' '.join(tokens)
-    encode = tokeniser.texts_to_matrix([line], mode='binary')
+    encode = tokeniser.texts_to_matrix([line], mode='freq')
     yhat = model.predict(encode, verbose=0)
     return round(yhat[0,0])
 
 
 # MAIN FUNCTION
 def main(train_docs, test_docs) -> None:
-    test_review_1 = "love this movie"
-    test_review_2 = "terrible"
-    training_matrix, testing_matrix = prepare_data(train_docs, test_docs, 'binary')
+    test_review_1 = "love movie"
+    test_review_2 = "terrible movie"
+    training_matrix, testing_matrix = prepare_data(train_docs, test_docs, 'freq')
     model = evaluate_model(training_matrix, ytrain, testing_matrix, ytest)
     print("1 : ",predict_sentiment(test_review_1, vocab, tokeniser, model))
     print("2 : ",predict_sentiment(test_review_2, vocab, tokeniser, model))
-
+    
 
 if __name__ == '__main__':
     main(train_docs, test_docs)
